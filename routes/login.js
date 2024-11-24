@@ -6,7 +6,13 @@ const router = express.Router();
 const SECRET_KEY = 'mysecretkey'; // Ganti dengan kunci rahasia Anda sendiri
 
 // Load User Data
-const users = require('../data/users.json');
+const usersFilePath = './data/users.json';
+let users = require('../data/users.json');
+
+// Simpan data pengguna ke file JSON
+const saveUsers = (users) => {
+    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+};
 
 // Endpoint untuk login
 router.post('/login', (req, res) => {
@@ -21,6 +27,35 @@ router.post('/login', (req, res) => {
     } else {
         res.status(401).json({ message: 'Invalid username or password' });
     }
+});
+
+// Endpoint untuk menambahkan akun baru
+router.post('/register', (req, res) => {
+    const { username, password } = req.body;
+
+    // Validasi input
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required' });
+    }
+
+    // Periksa apakah username sudah ada
+    const existingUser = users.find(u => u.username === username);
+    if (existingUser) {
+        return res.status(409).json({ message: 'Username already exists' });
+    }
+
+    // Tambahkan akun baru
+    const newUser = {
+        id: users.length + 1, // ID unik (increment)
+        username,
+        password // Dalam proyek nyata, password harus di-hash!
+    };
+    users.push(newUser);
+
+    // Simpan ke file JSON
+    saveUsers(users);
+
+    res.status(201).json({ message: 'User registered successfully', user: newUser });
 });
 
 // Middleware untuk autentikasi dengan JWT
