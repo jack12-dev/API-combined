@@ -1,0 +1,23 @@
+{
+    "name": "combined-api",
+    "version": "1.0.0",
+    "description": "A combined API for articles, bahan, bookmarks, and login functionality",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "keywords": [
+        "API",
+        "Node.js",
+        "Express",
+        "JWT",
+        "CRUD"
+    ],
+    "author": "Your Name",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.20.3",
+        "express": "^4.21.1",
+        "jsonwebtoken": "^9.0.2"
+    }
+}
