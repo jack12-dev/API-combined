@@ -1,28 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// Inisialisasi aplikasi
 const app = express();
 const PORT = 9000;
 
 // Middleware
 app.use(bodyParser.json());
 
-// Import rute
-const articleRoutes = require('./routes/article');
-const bahanRoutes = require('./routes/bahan');
-const bookmarkRoutes = require('./routes/bookmark');
+// Import rute login
 const loginRoutes = require('./routes/login');
 
-// Gunakan rute
-app.use('/api/articles', articleRoutes);
-app.use('/api/bahan', bahanRoutes);
-app.use('/api/bookmarks', bookmarkRoutes);
-app.use('/api', loginRoutes); // Login diakses dengan prefix /api
+// Gunakan rute login
+app.use('/api', loginRoutes);
 
 // Default route
 app.get('/', (req, res) => {
-    res.send('Welcome to the Combined API!');
+    res.send('Welcome to the Combined API with Login Functionality!');
 });
 
 // Jalankan server
